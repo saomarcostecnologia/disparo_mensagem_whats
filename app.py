@@ -1,6 +1,3 @@
-        
-
-          
 from playwright.sync_api import Playwright, sync_playwright, expect
 import time
 import pandas as pd
@@ -13,6 +10,7 @@ def run(playwright: Playwright) -> None:
     # Abre a guia
     page = context.new_page()
     page.goto("https://web.whatsapp.com")
+    time.sleep(20)
 
     print('iniciando')
     
@@ -52,7 +50,7 @@ def run(playwright: Playwright) -> None:
                 page.locator("[data-testid=\"conversation-panel-wrapper\"] button").nth(4).click()
             
             #Após o envio aguarda 10 segundos para ter certeza que a mensagem foi enviada. 
-            time.sleep(10)
+            time.sleep(15)
 
         #Caso as etapas anteriores do Try (Tente) derem errado ele vai para o proximo item da planilha, mas você pode colocar a saida que achar melhor.     
         except:
