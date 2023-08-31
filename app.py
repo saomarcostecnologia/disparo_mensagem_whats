@@ -16,6 +16,7 @@ def run(playwright: Playwright) -> None:
         Nome = Sheet1_df.loc[i, "Nome Completo"]
         Telefone = Sheet1_df.loc[i, "Telefone"]
         Ativo = Sheet1_df.loc[i, "Ativo"]
+        arquivo = Sheet1_df.loc[i, "Arquivo"]
 
         print(Nome, Telefone)
 
@@ -24,22 +25,52 @@ def run(playwright: Playwright) -> None:
 
         if Ativo == "S":
             msg = "Segue link de feedback: www.google.com.br"
+            link = "https://web.whatsapp.com/send?phone=" + str(Telefone) + str(text) + str(msgg) + str(msg)
+            try:
+                page.goto(link)
+                with page.expect_navigation():
+                    page.locator("div[role=\"textbox\"]")
+
+                with page.expect_navigation():
+                    page.locator("//*[@id=\"main\"]/footer/div[1]/div/span[2]/div/div[2]/div[2]/button/span").click()
+                    time.sleep(10)
+
+            except:
+                continue 
         else:
-            msg = "Seu cadastro não está ativo no momento."
+            caminho_img = os.path.abspath(f"Arquivo/{arquivo}")
+            print(caminho_img)
 
-        link = "https://web.whatsapp.com/send?phone=" + str(Telefone) + str(text) + str(msgg) + str(msg)
+            msg = " Seu cadastro não está ativo no momento."
+            link = "https://web.whatsapp.com/send?phone=" + str(Telefone) + str(text) + str(msgg) + str(msg)
+            try:
+                page.goto(link)
+                with page.expect_navigation():
+                    page.locator("div[role=\"textbox\"]")
 
-        try:
-            page.goto(link)
-            with page.expect_navigation():
-                page.locator("div[role=\"textbox\"]")
+                with page.expect_navigation():
+                    page.locator("//*[@id=\"main\"]/footer/div[1]/div/span[2]/div/div[2]/div[2]/button/span").click()
+                    time.sleep(2)
 
-            with page.expect_navigation():
+                # Clicar no ícone de anexo
+                attachment_button = page.locator("//*[@id=\"main\"]/footer/div[1]/div/span[2]/div/div[1]/div[2]/div/div/div/span")
+                attachment_button.click()
+                time.sleep(5)
+
+                 # Selecionar o arquivo e enviar (imagem)
+                file_input = page.locator("//*[@id=\"main\"]/footer/div[1]/div/span[2]/div/div[1]/div[2]/div/span/div/ul/div/div[2]/li/div/input")
+                file_input.set_input_files(caminho_img)  # Substitua pelo caminho da imagem
                 page.locator("//*[@id=\"main\"]/footer/div[1]/div/span[2]/div/div[2]/div[2]/button/span").click()
-                time.sleep(10)
+                time.sleep(5)
 
-        except:
-            continue 
+
+            except:
+                continue 
+            time.sleep(10)
+
+        #link = "https://web.whatsapp.com/send?phone=" + str(Telefone) + str(text) + str(msgg) + str(msg)
+
+        
 
 with sync_playwright() as playwright:
     run(playwright)
