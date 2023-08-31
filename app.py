@@ -16,8 +16,8 @@ def run(playwright: Playwright) -> None:
     
     #Ler a planilha
     Sheet1_df = pd.read_excel("Clientes.xlsx")
-    for i, DADOS in enumerate(Sheet1_df['Nome']):
-        Nome = Sheet1_df.loc[i,"Nome"]
+    for i, DADOS in enumerate(Sheet1_df['Nome Completo']):
+        Nome = Sheet1_df.loc[i,"Nome Completo"]
         Telefone = Sheet1_df.loc[i,"Telefone"]
 
         print(Nome,Telefone)
