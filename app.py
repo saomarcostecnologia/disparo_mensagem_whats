@@ -28,10 +28,10 @@ def run(playwright: Playwright) -> None:
         text = "&text="
         
         #Saudação + nome da planilha
-        msgg = "Olá "+str(Nome)
+        msgg = "Olá "+str(Nome)+", tudo bem?"
         
         #Mensagem após saudação + nome
-        msg =  "Segue anexo link de feedback: www.google.com.br"
+        msg =  "Segue link de feedback: /n www.google.com.br"
 
         #Arquivo caso tenha anexo 
         #caminho_completo = os.path.abspath(f"arquivos/{Arquivo}")
@@ -56,7 +56,7 @@ def run(playwright: Playwright) -> None:
                 #page.locator("[data-testid=\"conversation-panel-wrapper\"] button").nth(4).click() 
             
             #Após o envio aguarda 10 segundos para ter certeza que a mensagem foi enviada. 
-            time.sleep(15)
+            time.sleep(10)
 
         #Caso as etapas anteriores do Try (Tente) derem errado ele vai para o proximo item da planilha, mas você pode colocar a saida que achar melhor.     
         except:
