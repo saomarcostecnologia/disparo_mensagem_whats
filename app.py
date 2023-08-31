@@ -1,6 +1,7 @@
 from playwright.sync_api import Playwright, sync_playwright, expect
 import time
 import pandas as pd
+import os
 
 
 #Inicia no navegador
@@ -10,7 +11,7 @@ def run(playwright: Playwright) -> None:
     # Abre a guia
     page = context.new_page()
     page.goto("https://web.whatsapp.com")
-    time.sleep(20)
+    time.sleep(30)
 
     print('iniciando')
     
@@ -19,6 +20,7 @@ def run(playwright: Playwright) -> None:
     for i, DADOS in enumerate(Sheet1_df['Nome Completo']):
         Nome = Sheet1_df.loc[i,"Nome Completo"]
         Telefone = Sheet1_df.loc[i,"Telefone"]
+        #Arquivo = Sheet1_df.loc[i,"Arquivo"]
 
         print(Nome,Telefone)
 
@@ -30,6 +32,9 @@ def run(playwright: Playwright) -> None:
         
         #Mensagem após saudação + nome
         msg =  "Segue anexo link de feedback: www.google.com.br"
+
+        #Arquivo caso tenha anexo 
+        #caminho_completo = os.path.abspath(f"arquivos/{Arquivo}")
 
         #Link já com o número e mensagens prontas pra envio (unifica todas as variaveis anteriores
         link = "https://web.whatsapp.com/send?phone="+str(Telefone)+str(text)+str(msgg)+str(msg)
@@ -47,7 +52,8 @@ def run(playwright: Playwright) -> None:
 
             # Se tudo der certo nas etapas anteriores, ele vai aguardar o botão de envio ficar disponivel e pertar para enviar. 
             with page.expect_navigation():# aguarda o elemento por 30 segundos por padrão
-                page.locator("[data-testid=\"conversation-panel-wrapper\"] button").nth(4).click()
+                page.locator("//*[@id=\"main\"]/footer/div[1]/div/span[2]/div/div[2]/div[2]/button/span").click()
+                #page.locator("[data-testid=\"conversation-panel-wrapper\"] button").nth(4).click() 
             
             #Após o envio aguarda 10 segundos para ter certeza que a mensagem foi enviada. 
             time.sleep(15)
