@@ -24,7 +24,7 @@ def run(playwright: Playwright) -> None:
         msgg = "Olá " + str(Nome) + ", tudo bem?"
 
         if Ativo == "S":
-            msg = "Segue link de feedback: www.google.com.br"
+            msg = "Segue link de feedback: \nwww.google.com.br"
             link = "https://web.whatsapp.com/send?phone=" + str(Telefone) + str(text) + str(msgg) + str(msg)
             try:
                 page.goto(link)
