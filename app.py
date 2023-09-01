@@ -55,22 +55,18 @@ def run(playwright: Playwright) -> None:
                 # Clicar no ícone de anexo
                 attachment_button = page.locator("//*[@id=\"main\"]/footer/div[1]/div/span[2]/div/div[1]/div[2]/div/div/div/span")
                 attachment_button.click()
-                time.sleep(5)
+                time.sleep(3)
 
                  # Selecionar o arquivo e enviar (imagem)
                 file_input = page.locator("//*[@id=\"main\"]/footer/div[1]/div/span[2]/div/div[1]/div[2]/div/span/div/ul/div/div[2]/li/div/input")
                 file_input.set_input_files(caminho_img)  # Substitua pelo caminho da imagem
-                page.locator("//*[@id=\"main\"]/footer/div[1]/div/span[2]/div/div[2]/div[2]/button/span").click()
-                time.sleep(5)
+                page.locator("//*[@id=\"app\"]/div/div/div[3]/div[2]/span/div/span/div/div/div[2]/div/div[2]/div[2]/div/div/span").click()
+                time.sleep(3)
 
 
             except:
                 continue 
             time.sleep(10)
-
-        #link = "https://web.whatsapp.com/send?phone=" + str(Telefone) + str(text) + str(msgg) + str(msg)
-
-        
 
 with sync_playwright() as playwright:
     run(playwright)
